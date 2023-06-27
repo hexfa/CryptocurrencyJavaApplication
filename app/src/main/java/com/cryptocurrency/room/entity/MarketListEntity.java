@@ -4,7 +4,8 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import com.example.cryptocurrencyjavaapplication.models.cryptolistmodel.AllMarketModel;
+import com.cryptocurrency.models.cryptolistmodel.AllMarketModel;
+
 
 @Entity(tableName = "AllMarket")
 public class MarketListEntity {
