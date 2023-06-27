@@ -3,7 +3,12 @@
 -----------------------------
 
 This project is an Android application that provides access to the Coin Market Cap API for retrieving cryptocurrency data. The app is built using the MVVM (Model-View-ViewModel) architecture with Hilt for dependency injection. It utilizes the Java language along with additional libraries such as RxJava, Gson, and Room for enhanced functionality.
-
+Table of Contents
+- [Features](#features-)
+- [Getting Started](#getting-started-)
+- [Configuration](#configuration-️)
+- [Preview](#preview-)
+- [Built With](#built-with-️)
 ## Features 🚀
 
 - **Coin Market Cap API Integration:** Retrieve cryptocurrency data from the Coin Market Cap API to get real-time information about various cryptocurrencies.
