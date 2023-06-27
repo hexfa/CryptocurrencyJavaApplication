@@ -17,16 +17,20 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
-import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import androidx.recyclerview.widget.RecyclerView;
 
-
 import com.cryptocurrency.MainActivity;
+import com.cryptocurrency.R;
+import com.cryptocurrency.adapter.marketRV_Adapter;
 import com.cryptocurrency.databinding.FragmentMarketBinding;
+import com.cryptocurrency.models.cryptolistmodel.AllMarketModel;
+import com.cryptocurrency.models.cryptolistmodel.CryptoMarketDataModel;
 import com.cryptocurrency.models.cryptolistmodel.DataItem;
+import com.cryptocurrency.room.entity.MarketDataEntity;
+import com.cryptocurrency.room.entity.MarketListEntity;
 import com.cryptocurrency.viewmodel.AppViewModel;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 
@@ -242,15 +246,12 @@ public class MarketFragment extends Fragment {
         collapsingToolbarLayout = view.findViewById(R.id.collapsing_market_tb);
         NavigationUI.setupWithNavController(collapsingToolbarLayout, toolbar, navController, appBarConfiguration);
 
-        navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
-            @Override
-            public void onDestinationChanged(@NonNull NavController controller, @NonNull NavDestination destination, @Nullable Bundle arguments) {
-                if (destination.getId() == R.id.marketFragment) {
-                    collapsingToolbarLayout.setTitleEnabled(false);
-                    toolbar.setNavigationIcon(R.drawable.ic_baseline_sort_24);
-                    toolbar.setTitle("Market");
-                    toolbar.setTitleTextColor(Color.WHITE);
-                }
+        navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
+            if (destination.getId() == R.id.marketFragment) {
+                collapsingToolbarLayout.setTitleEnabled(false);
+                toolbar.setNavigationIcon(R.drawable.ic_baseline_sort_24);
+                toolbar.setTitle("Market");
+                toolbar.setTitleTextColor(Color.WHITE);
             }
         });
     }
