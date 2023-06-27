@@ -2,7 +2,7 @@ package com.cryptocurrency.room.converters;
 
 import androidx.room.TypeConverter;
 
-import com.example.cryptocurrencyjavaapplication.models.cryptolistmodel.CryptoMarketDataModel;
+import com.cryptocurrency.models.cryptolistmodel.CryptoMarketDataModel;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
