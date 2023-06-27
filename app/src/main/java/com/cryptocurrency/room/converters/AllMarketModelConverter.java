@@ -16,9 +16,9 @@ public class AllMarketModelConverter {
             return (null);
         }
         Gson gson = new Gson();
-        Type type = new TypeToken<AllMarketModel>() {}.getType();
-        String json = gson.toJson(allMarketModel, type);
-        return json;
+        Type type = new TypeToken<AllMarketModel>() {
+        }.getType();
+        return gson.toJson(allMarketModel, type);
     }
 
     @TypeConverter
@@ -27,8 +27,8 @@ public class AllMarketModelConverter {
             return (null);
         }
         Gson gson = new Gson();
-        Type type = new TypeToken<AllMarketModel>() {}.getType();
-        AllMarketModel allMarketModel = gson.fromJson(allMarket, type);
-        return allMarketModel;
+        Type type = new TypeToken<AllMarketModel>() {
+        }.getType();
+        return gson.fromJson(allMarket, type);
     }
 }

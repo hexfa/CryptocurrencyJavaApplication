@@ -22,9 +22,9 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.cryptocurrency.MainActivity;
 import com.cryptocurrency.R;
-import com.cryptocurrency.adapter.TopCoinRvAdapter;
-import com.cryptocurrency.adapter.TopGainLoserAdapter;
-import com.cryptocurrency.adapter.sliderImageAdapter;
+import com.cryptocurrency.adapter.ImageCarouselAdapter;
+import com.cryptocurrency.adapter.TopCoinListAdapter;
+import com.cryptocurrency.adapter.TopPerformersAdapter;
 import com.cryptocurrency.databinding.FragmentHomeBinding;
 import com.cryptocurrency.models.cryptolistmodel.AllMarketModel;
 import com.cryptocurrency.models.cryptolistmodel.DataItem;
@@ -48,10 +48,10 @@ public class HomeFragment extends Fragment {
     FragmentHomeBinding binding;
     MainActivity mainActivity;
     AppViewModel appViewModel;
-    TopCoinRvAdapter topCoinRvAdapter;
-    TopGainLoserAdapter topGainLoserAdapter;
+    TopCoinListAdapter topCoinRvAdapter;
+    TopPerformersAdapter topGainLoserAdapter;
 
-    public List<String> top_want = Arrays.asList("BTC","ETH","BNB","ADA","XRP","DOGE","DOT","UNI","LTC","LINK");
+    public List<String> top_want = Arrays.asList("BTC", "ETH", "BNB", "ADA", "XRP", "DOGE", "DOT", "UNI", "LTC", "LINK");
 
     CompositeDisposable compositeDisposable;
 
@@ -66,7 +66,7 @@ public class HomeFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.fragment_home, container, false);
 
@@ -74,21 +74,21 @@ public class HomeFragment extends Fragment {
         compositeDisposable = new CompositeDisposable();
         setupViewPager2();
         getAllMarketDataFromDb();
-        setupTablayout(binding.topGainIndicator,binding.topLoseIndicator);
+        setupTablayout(binding.topGainIndicator, binding.topLoseIndicator);
 
         return binding.getRoot();
     }
 
-    private void setupTablayout(View topGainIndicator,View topLoseIndicator){
+    private void setupTablayout(View topGainIndicator, View topLoseIndicator) {
 
-        topGainLoserAdapter = new TopGainLoserAdapter(this);
+        topGainLoserAdapter = new TopPerformersAdapter(this);
         binding.viewPager2.setAdapter(topGainLoserAdapter);
 
 
-        Animation gainAnimIn = AnimationUtils.loadAnimation(getActivity().getApplicationContext(),R.anim.slide_from_left);
-        Animation gainAnimOut = AnimationUtils.loadAnimation(getActivity().getApplicationContext(),R.anim.slide_out_left);
-        Animation loseAnimIn = AnimationUtils.loadAnimation(getActivity().getApplicationContext(),R.anim.slide_from_right);
-        Animation loseAnimOut = AnimationUtils.loadAnimation(getActivity().getApplicationContext(),R.anim.slide_out_right);
+        Animation gainAnimIn = AnimationUtils.loadAnimation(requireActivity().getApplicationContext(), R.anim.slide_from_left);
+        Animation gainAnimOut = AnimationUtils.loadAnimation(requireActivity().getApplicationContext(), R.anim.slide_out_left);
+        Animation loseAnimIn = AnimationUtils.loadAnimation(requireActivity().getApplicationContext(), R.anim.slide_from_right);
+        Animation loseAnimOut = AnimationUtils.loadAnimation(requireActivity().getApplicationContext(), R.anim.slide_out_right);
 
         binding.viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
@@ -100,13 +100,13 @@ public class HomeFragment extends Fragment {
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
 
-                if (position == 0){
+                if (position == 0) {
                     topLoseIndicator.startAnimation(loseAnimOut);
                     topLoseIndicator.setVisibility(View.GONE);
                     topGainIndicator.setVisibility(View.VISIBLE);
                     topGainIndicator.startAnimation(gainAnimIn);
 
-                }else {
+                } else {
                     topGainIndicator.startAnimation(gainAnimOut);
                     topGainIndicator.setVisibility(View.GONE);
                     topLoseIndicator.setVisibility(View.VISIBLE);
@@ -116,9 +116,9 @@ public class HomeFragment extends Fragment {
         });
 
         new TabLayoutMediator(binding.tablayout, binding.viewPager2, (tab, position) -> {
-            if (position == 0){
+            if (position == 0) {
                 tab.setText("Top Gain");
-            }else {
+            } else {
                 tab.setText("Top Lose");
             }
         }).attach();
@@ -127,8 +127,8 @@ public class HomeFragment extends Fragment {
 
     private void setupViewPager2() {
 
-        appViewModel.getMutableLiveData().observe(getActivity(), pics -> {
-            binding.viewPagerImageSlider.setAdapter(new sliderImageAdapter(pics));
+        appViewModel.getMutableLiveData().observe(requireActivity(), pics -> {
+            binding.viewPagerImageSlider.setAdapter(new ImageCarouselAdapter(pics));
             binding.viewPagerImageSlider.setOffscreenPageLimit(3);
             binding.viewPagerImageSlider.setVisibility(View.VISIBLE);
         });
@@ -141,13 +141,11 @@ public class HomeFragment extends Fragment {
                 .subscribe(marketListEntity -> {
 
                     AllMarketModel allMarketModel = marketListEntity.getAllMarketModel();
-//                        Log.e("TAG", "onAccept: " + allMarketModel.getRootData().getCryptoCurrencyList().get(0).getName() );
-//                        Log.e("TAG", "onAccept: " + allMarketModel.getRootData().getCryptoCurrencyList().get(1).getName() );
                     ArrayList<DataItem> top10 = new ArrayList<>();
-                    for (int i = 0;i < allMarketModel.getRootData().getCryptoCurrencyList().size();i++){
-                        for (int j = 0; j<top_want.size();j++){
+                    for (int i = 0; i < allMarketModel.getRootData().getCryptoCurrencyList().size(); i++) {
+                        for (int j = 0; j < top_want.size(); j++) {
                             String coin_name = top_want.get(j);
-                            if (allMarketModel.getRootData().getCryptoCurrencyList().get(i).getSymbol().equals(coin_name)){
+                            if (allMarketModel.getRootData().getCryptoCurrencyList().get(i).getSymbol().equals(coin_name)) {
                                 DataItem dataItem = allMarketModel.getRootData().getCryptoCurrencyList().get(i);
                                 top10.add(dataItem);
                             }
@@ -155,10 +153,10 @@ public class HomeFragment extends Fragment {
                     }
 
                     if (binding.TopCoinRv.getAdapter() != null) {
-                        topCoinRvAdapter = (TopCoinRvAdapter) binding.TopCoinRv.getAdapter();
+                        topCoinRvAdapter = (TopCoinListAdapter) binding.TopCoinRv.getAdapter();
                         topCoinRvAdapter.updateData(top10);
                     } else {
-                        topCoinRvAdapter = new TopCoinRvAdapter(top10);
+                        topCoinRvAdapter = new TopCoinListAdapter(top10);
                         binding.TopCoinRv.setAdapter(topCoinRvAdapter);
                     }
                 });
@@ -181,7 +179,7 @@ public class HomeFragment extends Fragment {
         NavigationUI.setupWithNavController(toolbar, navController, appBarConfiguration);
 
         // set click listener for navigate profile fragment
-        toolbar.setOnMenuItemClickListener(item -> NavigationUI.onNavDestinationSelected(item,navController));
+        toolbar.setOnMenuItemClickListener(item -> NavigationUI.onNavDestinationSelected(item, navController));
         navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
             if (destination.getId() == R.id.homeFragment) {
                 toolbar.setNavigationIcon(R.drawable.ic_baseline_sort_24);
@@ -189,6 +187,7 @@ public class HomeFragment extends Fragment {
             }
         });
     }
+
     @Override
     public void onDestroy() {
         super.onDestroy();

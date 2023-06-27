@@ -76,87 +76,86 @@ public class MainActivity extends AppCompatActivity {
         checkConnection();
     }
 
-    private void checkConnection(){
-        ConnectivityManager.NetworkCallback networkCallback = new ConnectivityManager.NetworkCallback(){
+    private void checkConnection() {
+        ConnectivityManager.NetworkCallback networkCallback = new ConnectivityManager.NetworkCallback() {
             @Override
             public void onAvailable(@androidx.annotation.NonNull Network network) {
-                Log.e("TAG", "onAvailable: " );
+                Log.e("TAG", "onAvailable: ");
                 callListApiRequest();
                 callCryptoMarketApiRequest();
             }
 
             @Override
             public void onLost(@androidx.annotation.NonNull Network network) {
-                Log.e("TAG", "onLost: " );
-                Snackbar.make(binding.mainCon,"No Internet, Please Connect again",4000).show();
+                Log.e("TAG", "onLost: ");
+                Snackbar.make(binding.mainCon, "No Internet, Please Connect again", 4000).show();
             }
         };
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             connectivityManager.registerDefaultNetworkCallback(networkCallback);
-        }else{
-            connectivityManager.registerNetworkCallback(networkRequest,networkCallback);
+        } else {
+            connectivityManager.registerNetworkCallback(networkRequest, networkCallback);
         }
     }
 
     private void callCryptoMarketApiRequest() {
         Completable.fromRunnable(() -> {
 
-            try {
-                Document pageSrc = Jsoup.connect("https://coinmarketcap.com/").get();
+                    try {
+                        Document pageSrc = Jsoup.connect("https://coinmarketcap.com/").get();
 
-                Elements scrapeMarketData = pageSrc.getElementsByClass("cmc-link");
-                String[] dominance_txt = scrapeMarketData.get(4).text().split(" ");
+                        Elements scrapeMarketData = pageSrc.getElementsByClass("cmc-link");
+                        String[] dominance_txt = scrapeMarketData.get(4).text().split(" ");
 
-                // Scraping Market number of changes like (Market-capChange,volumeChange,...)
-                Elements ScrapeMarketChange = pageSrc.getElementsByClass("sc-27sy12-0 gLZJFn");
-                String[] changePercent = ScrapeMarketChange.text().split(" ");
+                        // Scraping Market number of changes like (Market-capChange,volumeChange,...)
+                        Elements ScrapeMarketChange = pageSrc.getElementsByClass("sc-27sy12-0 gLZJFn");
+                        String[] changePercent = ScrapeMarketChange.text().split(" ");
 
-                // Scraping All span Tag
-                Elements ScrapeChangeIcon = pageSrc.getElementsByTag("span");
+                        // Scraping All span Tag
+                        Elements ScrapeChangeIcon = pageSrc.getElementsByTag("span");
 
-                // get all span Tag wth Icon (class= caretUp and caretDown)
-                ArrayList<String> IconList = new ArrayList<>();
-                for (Element i : ScrapeChangeIcon){
-                    if (i.hasClass("icon-Caret-down") || i.hasClass("icon-Caret-up")){
-                        IconList.add(i.attr("class"));
+                        // get all span Tag wth Icon (class= caretUp and caretDown)
+                        ArrayList<String> IconList = new ArrayList<>();
+                        for (Element i : ScrapeChangeIcon) {
+                            if (i.hasClass("icon-Caret-down") || i.hasClass("icon-Caret-up")) {
+                                IconList.add(i.attr("class"));
+                            }
+                        }
+
+                        // matching - or + element of PercentChanges
+                        ArrayList<String> finalChangePercent = new ArrayList<>();
+                        for (int i = 0; i < 3; i++) {
+                            if (IconList.get(i).equals("icon-Caret-up")) {
+                                finalChangePercent.add(changePercent[i]);
+                            } else {
+                                finalChangePercent.add("-" + changePercent[i]);
+                            }
+                        }
+
+
+                        String cryptos = scrapeMarketData.get(0).text();
+                        String exchanges = scrapeMarketData.get(1).text();
+                        String market_cap = scrapeMarketData.get(2).text();
+                        String vol_24 = scrapeMarketData.get(3).text();
+
+                        String BTC_dominance = dominance_txt[1];
+                        String ETH_dominance = dominance_txt[3];
+
+                        String MarketCap_change = finalChangePercent.get(0);
+                        String vol_change = finalChangePercent.get(1);
+                        String BTCD_change = finalChangePercent.get(2);
+
+
+                        CryptoMarketDataModel cryptoMarketDataModel = new CryptoMarketDataModel(cryptos, exchanges, market_cap, vol_24, BTC_dominance, ETH_dominance, MarketCap_change, vol_change, BTCD_change);
+
+                        appViewModel.insertCryptoDataMarket(cryptoMarketDataModel);
+                        // Log.e("TAG", "run: " + scrapeMarketData.get(0).text());
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
-                }
-
-                // matching - or + element of PercentChanges
-                ArrayList<String> finalChangePercent = new ArrayList<>();
-                for (int i = 0;i < 3;i++){
-                    if (IconList.get(i).equals("icon-Caret-up")){
-                        finalChangePercent.add(changePercent[i]);
-                    }else{
-                        finalChangePercent.add("-" + changePercent[i]);
-                    }
-                }
-
-
-
-                String cryptos = scrapeMarketData.get(0).text();
-                String exchanges = scrapeMarketData.get(1).text();
-                String market_cap = scrapeMarketData.get(2).text();
-                String  vol_24 = scrapeMarketData.get(3).text();
-
-                String BTC_dominance = dominance_txt[1];
-                String ETH_dominance = dominance_txt[3];
-
-                String MarketCap_change = finalChangePercent.get(0);
-                String vol_change = finalChangePercent.get(1);
-                String BTCD_change = finalChangePercent.get(2);
-
-
-                CryptoMarketDataModel cryptoMarketDataModel = new CryptoMarketDataModel(cryptos,exchanges,market_cap,vol_24,BTC_dominance,ETH_dominance,MarketCap_change,vol_change,BTCD_change);
-
-                appViewModel.insertCryptoDataMarket(cryptoMarketDataModel);
-                // Log.e("TAG", "run: " + scrapeMarketData.get(0).text());
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }).subscribeOn(Schedulers.io())
+                }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new CompletableObserver() {
                     @Override
@@ -166,7 +165,7 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void onComplete() {
-                        Log.e("TAG", "onComplete: Scrape is done" );
+                        Log.e("TAG", "onComplete: Scrape is done");
                     }
 
                     @Override
@@ -200,14 +199,15 @@ public class MainActivity extends AppCompatActivity {
                         appViewModel.insertAllMarket(allMarketModel);
 
                     }
+
                     @Override
                     public void onError(@NonNull Throwable e) {
-                        Log.e("TAG", "onError: " , e);
+                        Log.e("TAG", "onError: ", e);
                     }
 
                     @Override
                     public void onComplete() {
-                        Log.e("TAG", "onComplete: " );
+                        Log.e("TAG", "onComplete: ");
                     }
                 });
     }
@@ -223,10 +223,10 @@ public class MainActivity extends AppCompatActivity {
 
         binding.navigationView.setNavigationItemSelectedListener(item -> {
 
-            if (item.getItemId() == R.id.exit){
+            if (item.getItemId() == R.id.exit) {
                 finish();
-            }else {
-                NavigationUI.onNavDestinationSelected(item,navController);
+            } else {
+                NavigationUI.onNavDestinationSelected(item, navController);
                 binding.drawerLayout.closeDrawers();
             }
             return false;

@@ -6,7 +6,6 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
-
 import com.cryptocurrency.R;
 import com.cryptocurrency.models.cryptolistmodel.AllMarketModel;
 import com.cryptocurrency.models.cryptolistmodel.CryptoMarketDataModel;
@@ -35,23 +34,26 @@ public class AppViewModel extends AndroidViewModel {
         super(application);
         getViewPagerData();
     }
-    public Future <Observable<AllMarketModel>> marketFutureCall(){
+
+    public Future<Observable<AllMarketModel>> marketFutureCall() {
         return appRepository.marketListFutureCall();
     }
-    public void insertCryptoDataMarket(CryptoMarketDataModel cryptoMarketDataModel){
+
+    public void insertCryptoDataMarket(CryptoMarketDataModel cryptoMarketDataModel) {
         appRepository.insertCryptoDataMarket(cryptoMarketDataModel);
     }
 
-    public void insertAllMarket(AllMarketModel allMarketModel){
+    public void insertAllMarket(AllMarketModel allMarketModel) {
         appRepository.insertAllMarket(allMarketModel);
     }
-    public Flowable<MarketListEntity> getAllMarketData(){
+
+    public Flowable<MarketListEntity> getAllMarketData() {
         return appRepository.getAllMarketData();
     }
-    public Flowable<MarketDataEntity> getCryptoMarketData(){
+
+    public Flowable<MarketDataEntity> getCryptoMarketData() {
         return appRepository.getCryptoMarketData();
     }
-
 
 
     MutableLiveData<ArrayList<Integer>> getViewPagerData() {

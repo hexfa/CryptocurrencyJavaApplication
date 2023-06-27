@@ -15,13 +15,13 @@ import com.cryptocurrency.databinding.SliderImageItemBinding;
 
 import java.util.ArrayList;
 
-public class sliderImageAdapter extends RecyclerView.Adapter<sliderImageAdapter.SliderImageViewHolder> {
+public class ImageCarouselAdapter extends RecyclerView.Adapter<ImageCarouselAdapter.SliderImageViewHolder> {
 
     LayoutInflater layoutInflater;
 
     ArrayList<Integer> arrayList;
 
-    public sliderImageAdapter(ArrayList<Integer> arrayList) {
+    public ImageCarouselAdapter(ArrayList<Integer> arrayList) {
         this.arrayList = arrayList;
     }
 
@@ -29,10 +29,10 @@ public class sliderImageAdapter extends RecyclerView.Adapter<sliderImageAdapter.
     @Override
     public SliderImageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        if (layoutInflater == null){
+        if (layoutInflater == null) {
             layoutInflater = LayoutInflater.from(parent.getContext());
         }
-        SliderImageItemBinding sliderImageItemBinding = DataBindingUtil.inflate(layoutInflater, R.layout.slider_image_item,parent,false);
+        SliderImageItemBinding sliderImageItemBinding = DataBindingUtil.inflate(layoutInflater, R.layout.slider_image_item, parent, false);
 
         return new SliderImageViewHolder(sliderImageItemBinding);
     }
@@ -47,7 +47,7 @@ public class sliderImageAdapter extends RecyclerView.Adapter<sliderImageAdapter.
         return arrayList.size();
     }
 
-    static class SliderImageViewHolder extends RecyclerView.ViewHolder{
+    static class SliderImageViewHolder extends RecyclerView.ViewHolder {
         SliderImageItemBinding sliderImageItemBinding;
 
         public SliderImageViewHolder(@NonNull SliderImageItemBinding sliderImageItemBinding) {

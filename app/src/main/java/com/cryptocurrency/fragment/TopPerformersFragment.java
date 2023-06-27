@@ -15,7 +15,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.cryptocurrency.R;
-import com.cryptocurrency.adapter.GainLoseRvAdapter;
+import com.cryptocurrency.adapter.PerformanceAdapter;
 import com.cryptocurrency.databinding.FragmentTopGainLoseBinding;
 import com.cryptocurrency.models.cryptolistmodel.AllMarketModel;
 import com.cryptocurrency.models.cryptolistmodel.DataItem;
@@ -31,12 +31,12 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
-public class TopGainLoseFragment extends Fragment {
+public class TopPerformersFragment extends Fragment {
 
     FragmentTopGainLoseBinding binding;
     AppViewModel appViewModel;
     List<DataItem> data;
-    GainLoseRvAdapter gainLoseRvAdapter;
+    PerformanceAdapter gainLoseRvAdapter;
     CompositeDisposable compositeDisposable;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -74,32 +74,32 @@ public class TopGainLoseFragment extends Fragment {
                     try {
                         ArrayList<DataItem> dataItems = new ArrayList<>();
                         //if page was top Gainers
-                        if (pos == 0){
+                        if (pos == 0) {
                             //get 10 last Item
-                            for (int i = 0;i < 10;i++){
+                            for (int i = 0; i < 10; i++) {
                                 dataItems.add(data.get(data.size() - 1 - i));
                             }
 
                             //if page was top Losers
-                        }else if (pos == 1){
+                        } else if (pos == 1) {
                             //get 10 first Item
-                            for (int i = 0;i < 10;i++){
+                            for (int i = 0; i < 10; i++) {
                                 dataItems.add(data.get(i));
                             }
                         }
                         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
                         binding.gainLoseRv.setLayoutManager(linearLayoutManager);
 
-                        if (binding.gainLoseRv.getAdapter() == null){
-                            gainLoseRvAdapter = new GainLoseRvAdapter(dataItems);
+                        if (binding.gainLoseRv.getAdapter() == null) {
+                            gainLoseRvAdapter = new PerformanceAdapter(dataItems);
                             binding.gainLoseRv.setAdapter(gainLoseRvAdapter);
-                        }else {
-                            gainLoseRvAdapter = (GainLoseRvAdapter) binding.gainLoseRv.getAdapter();
+                        } else {
+                            gainLoseRvAdapter = (PerformanceAdapter) binding.gainLoseRv.getAdapter();
                             gainLoseRvAdapter.updateData(dataItems);
                         }
                         binding.gainloseTashieLoader.setVisibility(View.GONE);
 
-                    }catch (Exception e){
+                    } catch (Exception e) {
                         Log.e("exception", "setupRecyclerView: " + e.getMessage());
                     }
 

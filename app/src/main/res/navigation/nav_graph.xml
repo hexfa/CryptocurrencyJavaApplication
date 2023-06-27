@@ -7,20 +7,20 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.example.cryptocurrencyjavaapplication.fragment.HomeFragment"
+        android:name="com.cryptocurrency.fragment.HomeFragment"
         tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/marketFragment"
-        android:name="com.example.cryptocurrencyjavaapplication.fragment.MarketFragment"
+        android:name="com.cryptocurrency.fragment.MarketAnalysisFragment"
         tools:layout="@layout/fragment_market" />
     <fragment
         android:id="@+id/watchListFragment"
-        android:name="com.example.cryptocurrencyjavaapplication.fragment.WatchListFragment"
+        android:name="com.cryptocurrency.fragment.TrackingListFragment"
         tools:layout="@layout/fragment_watch_list" />
 
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.cryptocurrency.fragment.ProfileFragment"
+        android:name="com.cryptocurrency.fragment.PersonalInfoFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" />
 </navigation>

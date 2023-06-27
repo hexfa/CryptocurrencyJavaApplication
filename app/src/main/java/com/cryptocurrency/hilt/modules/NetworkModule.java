@@ -23,18 +23,19 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 @Module
 @InstallIn(SingletonComponent.class)
-public class HiltNetworkModule {
+public class NetworkModule {
 
     String Base_Url = "https://pro-api.coinmarketcap.com";
+
     @Provides
     @Singleton
-    OkHttpClient ProvideOkHttpClient(){
+    OkHttpClient ProvideOkHttpClient() {
         return new OkHttpClient().newBuilder().addInterceptor(new Interceptor() {
             @Override
             public Response intercept(Chain chain) throws IOException {
                 Request request = chain.request()
                         .newBuilder()
-                        .addHeader("X-CMC_PRO_API_KEY","2f7b1b18-cbeb-4861-8515-bca6b05e3777")
+                        .addHeader("X-CMC_PRO_API_KEY", "2f7b1b18-cbeb-4861-8515-bca6b05e3777")
                         .build();
                 return chain.proceed(request);
             }
@@ -43,7 +44,7 @@ public class HiltNetworkModule {
 
     @Provides
     @Singleton
-    Retrofit ProvideRetrofit(OkHttpClient okHttpClient){
+    Retrofit ProvideRetrofit(OkHttpClient okHttpClient) {
         return new Retrofit.Builder()
                 .baseUrl(Base_Url)
                 .client(okHttpClient)
@@ -54,14 +55,14 @@ public class HiltNetworkModule {
 
     @Provides
     @Singleton
-    RequestApi provideRequestApi(Retrofit retrofit){
+    RequestApi provideRequestApi(Retrofit retrofit) {
         return retrofit.create(RequestApi.class);
     }
 
     @Provides
     @Singleton
     AppRepository ProvideAppRepository(RequestApi requestApi,
-                                       RoomDao roomDao){
-        return new AppRepository(requestApi,roomDao);
+                                       RoomDao roomDao) {
+        return new AppRepository(requestApi, roomDao);
     }
 }

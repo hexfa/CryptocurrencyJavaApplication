@@ -11,58 +11,58 @@ import java.util.List;
 public class DataItem implements Parcelable {
 
     @SerializedName("id")
-    private int id;
+    private final int id;
 
     @SerializedName("name")
-    private String name;
+    private final String name;
 
     @SerializedName("symbol")
-    private String symbol;
+    private final String symbol;
 
     @SerializedName("lastUpdated")
-    private String lastUpdated;
+    private final String lastUpdated;
 
     @SerializedName("cmc_rank")
-    private int cmcRank;
+    private final int cmcRank;
 
     @SerializedName("marketPairCount")
-    private int numMarketPairs;
+    private final int numMarketPairs;
 
     @SerializedName("circulatingSupply")
-    private double circulatingSupply;
+    private final double circulatingSupply;
 
     @SerializedName("totalSupply")
-    private Number totalSupply;
+    private final Number totalSupply;
 
     @SerializedName("max_supply")
-    private double maxSupply;
+    private final double maxSupply;
 
     @SerializedName("ath")
-    private double ath;
+    private final double ath;
 
     @SerializedName("atl")
-    private double atl;
+    private final double atl;
 
     @SerializedName("high24h")
-    private double high24h;
+    private final double high24h;
 
     @SerializedName("low24h")
-    private double low24h;
+    private final double low24h;
 
     @SerializedName("isActive")
-    private int isActive;
+    private final int isActive;
 
     @SerializedName("tags")
-    private List<String> tags;
+    private final List<String> tags;
 
     @SerializedName("dateAdded")
-    private String dateAdded;
+    private final String dateAdded;
 
     @SerializedName("quotes")
     private List<ListUSD> listQuote;
 
     @SerializedName("slug")
-    private String slug;
+    private final String slug;
 
     protected DataItem(Parcel in) {
         id = in.readInt();

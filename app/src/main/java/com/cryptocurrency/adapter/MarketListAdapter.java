@@ -3,7 +3,6 @@ package com.cryptocurrency.adapter;
 import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -19,30 +18,30 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
-public class marketRV_Adapter extends RecyclerView.Adapter<marketRV_Adapter.MarketRV_Holder> {
+public class MarketListAdapter extends RecyclerView.Adapter<MarketListAdapter.MarketRV_Holder> {
 
 
     ArrayList<DataItem> dataItems;
     LayoutInflater layoutInflater;
 
-    public marketRV_Adapter(ArrayList<DataItem> dataItems) {
+    public MarketListAdapter(ArrayList<DataItem> dataItems) {
         this.dataItems = dataItems;
     }
 
     @NonNull
     @NotNull
     @Override
-    public MarketRV_Holder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if (layoutInflater == null){
+    public MarketRV_Holder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        if (layoutInflater == null) {
             layoutInflater = LayoutInflater.from(parent.getContext());
         }
-        MarketfragRvItemBinding marketfragRvItemBinding = DataBindingUtil.inflate(layoutInflater, R.layout.marketfrag_rv_item,parent,false);
+        MarketfragRvItemBinding marketfragRvItemBinding = DataBindingUtil.inflate(layoutInflater, R.layout.marketfrag_rv_item, parent, false);
         return new MarketRV_Holder(marketfragRvItemBinding);
     }
 
     @Override
     public void onBindViewHolder(MarketRV_Holder holder, @SuppressLint("RecyclerView") int position) {
-        holder.bind(dataItems.get(position),position);
+        holder.bind(dataItems.get(position), position);
 
         // set onclick for RecyclerView Items
 
@@ -57,8 +56,9 @@ public class marketRV_Adapter extends RecyclerView.Adapter<marketRV_Adapter.Mark
     }
 
 
-    public void updateData(ArrayList<DataItem> newdata) {
-        dataItems = newdata;
+    @SuppressLint("NotifyDataSetChanged")
+    public void updateData(ArrayList<DataItem> newData) {
+        dataItems = newData;
         notifyDataSetChanged();
 
     }
@@ -71,29 +71,30 @@ public class marketRV_Adapter extends RecyclerView.Adapter<marketRV_Adapter.Mark
             this.marketfragRvItemBinding = marketfragRvItemBinding;
         }
 
-        public void bind(DataItem dataItem, int position){
+        @SuppressLint({"DefaultLocale", "SetTextI18n"})
+        public void bind(DataItem dataItem, int position) {
 
-            loadCoinlogo(dataItem);
+            loadCoinLogo(dataItem);
             loadChart(dataItem);
             SetColorText(dataItem);
             marketfragRvItemBinding.marketCoinNumber.setText(String.valueOf(position + 1));
             marketfragRvItemBinding.marketCoinName.setText(dataItem.getName());
             marketfragRvItemBinding.marketCoinSymbol.setText(dataItem.getSymbol());
             SetDecimalsForPrice(dataItem);
-            //set + or - before precent change
-            if (dataItem.getListQuote().get(0).getPercentChange24h() > 0){
+            //set + or - before present change
+            if (dataItem.getListQuote().get(0).getPercentChange24h() > 0) {
                 marketfragRvItemBinding.MarketUpDownIcon.setBackgroundResource(R.drawable.ic_baseline_arrow_drop_up_24);
-                marketfragRvItemBinding.marketCoinChange.setText(String.format("%.2f",dataItem.getListQuote().get(0).getPercentChange24h()) + "%");
-            }else if (dataItem.getListQuote().get(0).getPercentChange24h() < 0){
+                marketfragRvItemBinding.marketCoinChange.setText(String.format("%.2f", dataItem.getListQuote().get(0).getPercentChange24h()) + "%");
+            } else if (dataItem.getListQuote().get(0).getPercentChange24h() < 0) {
                 marketfragRvItemBinding.MarketUpDownIcon.setBackgroundResource(R.drawable.ic_baseline_arrow_drop_down_24);
-                marketfragRvItemBinding.marketCoinChange.setText(String.format("%.2f",dataItem.getListQuote().get(0).getPercentChange24h()) + "%");
-            }else {
-                marketfragRvItemBinding.marketCoinChange.setText(String.format("%.2f",dataItem.getListQuote().get(0).getPercentChange24h()) + "%");
+                marketfragRvItemBinding.marketCoinChange.setText(String.format("%.2f", dataItem.getListQuote().get(0).getPercentChange24h()) + "%");
+            } else {
+                marketfragRvItemBinding.marketCoinChange.setText(String.format("%.2f", dataItem.getListQuote().get(0).getPercentChange24h()) + "%");
             }
             marketfragRvItemBinding.executePendingBindings();
         }
 
-        private void loadCoinlogo(DataItem dataItem) {
+        private void loadCoinLogo(DataItem dataItem) {
             Glide.with(marketfragRvItemBinding.getRoot().getContext())
                     .load("https://s2.coinmarketcap.com/static/img/coins/32x32/" + dataItem.getId() + ".png")
                     .thumbnail(Glide.with(marketfragRvItemBinding.getRoot().getContext()).load(R.drawable.loading))
@@ -107,29 +108,30 @@ public class marketRV_Adapter extends RecyclerView.Adapter<marketRV_Adapter.Mark
                     .into(marketfragRvItemBinding.chartImage);
         }
 
-        //set diffrent decimals for diffrent price
+        //set different decimals for different price
+        @SuppressLint({"SetTextI18n", "DefaultLocale"})
         private void SetDecimalsForPrice(DataItem dataItem) {
-            if (dataItem.getListQuote().get(0).getPrice() < 1){
-                marketfragRvItemBinding.marketCoinPrice.setText("$" + String.format("%.6f",dataItem.getListQuote().get(0).getPrice()));
-            }else if (dataItem.getListQuote().get(0).getPrice() < 10){
-                marketfragRvItemBinding.marketCoinPrice.setText("$" + String.format("%.4f",dataItem.getListQuote().get(0).getPrice()));
-            }else {
-                marketfragRvItemBinding.marketCoinPrice.setText("$" + String.format("%.2f",dataItem.getListQuote().get(0).getPrice()));
+            if (dataItem.getListQuote().get(0).getPrice() < 1) {
+                marketfragRvItemBinding.marketCoinPrice.setText("$" + String.format("%.6f", dataItem.getListQuote().get(0).getPrice()));
+            } else if (dataItem.getListQuote().get(0).getPrice() < 10) {
+                marketfragRvItemBinding.marketCoinPrice.setText("$" + String.format("%.4f", dataItem.getListQuote().get(0).getPrice()));
+            } else {
+                marketfragRvItemBinding.marketCoinPrice.setText("$" + String.format("%.2f", dataItem.getListQuote().get(0).getPrice()));
             }
         }
 
         //set Color Green and Red for price and chart
-        private void SetColorText(DataItem dataItem){
+        private void SetColorText(DataItem dataItem) {
             int greenColor = Color.parseColor("#FF00FF40");
             int redColor = Color.parseColor("#FFFF0000");
             int whiteColor = Color.parseColor("#FFFFFF");
-            if (dataItem.getListQuote().get(0).getPercentChange24h() < 0){
+            if (dataItem.getListQuote().get(0).getPercentChange24h() < 0) {
                 marketfragRvItemBinding.chartImage.setColorFilter(redColor);
                 marketfragRvItemBinding.marketCoinChange.setTextColor(Color.RED);
-            }else if (dataItem.getListQuote().get(0).getPercentChange24h() > 0){
+            } else if (dataItem.getListQuote().get(0).getPercentChange24h() > 0) {
                 marketfragRvItemBinding.chartImage.setColorFilter(greenColor);
                 marketfragRvItemBinding.marketCoinChange.setTextColor(Color.GREEN);
-            }else {
+            } else {
                 marketfragRvItemBinding.chartImage.setColorFilter(whiteColor);
                 marketfragRvItemBinding.marketCoinChange.setTextColor(Color.WHITE);
             }

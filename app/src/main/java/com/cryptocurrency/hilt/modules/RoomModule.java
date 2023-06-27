@@ -3,7 +3,6 @@ package com.cryptocurrency.hilt.modules;
 
 import android.content.Context;
 
-
 import com.cryptocurrency.room.AppDatabase;
 import com.cryptocurrency.room.RoomDao;
 
@@ -17,17 +16,17 @@ import dagger.hilt.components.SingletonComponent;
 
 @Module
 @InstallIn(SingletonComponent.class)
-public class HiltRoomModule  {
+public class RoomModule {
 
     @Provides
     @Singleton
-    AppDatabase ProvideAppDatabase(@ApplicationContext Context context){
+    AppDatabase ProvideAppDatabase(@ApplicationContext Context context) {
         return AppDatabase.getInstance(context);
     }
 
     @Provides
     @Singleton
-    RoomDao provideRoomDao(AppDatabase appDatabase){
+    RoomDao provideRoomDao(AppDatabase appDatabase) {
         return appDatabase.roomDao();
     }
 }

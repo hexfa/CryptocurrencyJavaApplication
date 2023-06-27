@@ -3,7 +3,6 @@ package com.cryptocurrency.adapter;
 import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -17,12 +16,12 @@ import com.cryptocurrency.models.cryptolistmodel.DataItem;
 
 import java.util.ArrayList;
 
-public class TopCoinRvAdapter extends RecyclerView.Adapter<TopCoinRvAdapter.TopCoinRvHolder>{
+public class TopCoinListAdapter extends RecyclerView.Adapter<TopCoinListAdapter.TopCoinRvHolder> {
 
     LayoutInflater layoutInflater;
     ArrayList<DataItem> dataItems;
 
-    public TopCoinRvAdapter(ArrayList<DataItem> dataItems) {
+    public TopCoinListAdapter(ArrayList<DataItem> dataItems) {
         this.dataItems = dataItems;
     }
 
@@ -30,22 +29,19 @@ public class TopCoinRvAdapter extends RecyclerView.Adapter<TopCoinRvAdapter.TopC
     @Override
     public TopCoinRvHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        if (layoutInflater == null){
+        if (layoutInflater == null) {
             layoutInflater = LayoutInflater.from(parent.getContext());
         }
 
-        TopmarketItemBinding topmarketItemBinding = DataBindingUtil.inflate(layoutInflater, R.layout.topmarket_item,parent,false);
+        TopmarketItemBinding topmarketItemBinding = DataBindingUtil.inflate(layoutInflater, R.layout.topmarket_item, parent, false);
         return new TopCoinRvHolder(topmarketItemBinding);
     }
 
     @Override
     public void onBindViewHolder(@NonNull TopCoinRvHolder holder, @SuppressLint("RecyclerView") int position) {
         holder.bind(dataItems.get(position));
-        holder.topmarketItemBinding.TopCoinCard.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        holder.topmarketItemBinding.TopCoinCard.setOnClickListener(v -> {
 
-            }
         });
     }
 
@@ -54,14 +50,15 @@ public class TopCoinRvAdapter extends RecyclerView.Adapter<TopCoinRvAdapter.TopC
         return dataItems.size();
     }
 
-    public void updateData(ArrayList<DataItem> newdata) {
+    @SuppressLint("NotifyDataSetChanged")
+    public void updateData(ArrayList<DataItem> newData) {
         dataItems.clear();
-        dataItems.addAll(newdata);
+        dataItems.addAll(newData);
         notifyDataSetChanged();
     }
 
 
-    static class TopCoinRvHolder extends RecyclerView.ViewHolder{
+    static class TopCoinRvHolder extends RecyclerView.ViewHolder {
 
         TopmarketItemBinding topmarketItemBinding;
 
@@ -70,15 +67,16 @@ public class TopCoinRvAdapter extends RecyclerView.Adapter<TopCoinRvAdapter.TopC
             this.topmarketItemBinding = topmarketItemBinding;
         }
 
-        public void bind(DataItem dataItem){
+        @SuppressLint({"SetTextI18n", "DefaultLocale"})
+        public void bind(DataItem dataItem) {
             loadCoinLogo(dataItem);
             SetColorText(dataItem);
             SetDecimalsForPrice(dataItem);
             topmarketItemBinding.TopCoinName.setText(String.format("%s/USD", dataItem.getSymbol()));
-            if (dataItem.getListQuote().get(0).getPercentChange24h() > 0){
-                topmarketItemBinding.TopCoinChange.setText("+" + String.format("%.2f",dataItem.getListQuote().get(0).getPercentChange24h()) + "%");
-            }else {
-                topmarketItemBinding.TopCoinChange.setText(String.format("%.2f",dataItem.getListQuote().get(0).getPercentChange24h()) + "%");
+            if (dataItem.getListQuote().get(0).getPercentChange24h() > 0) {
+                topmarketItemBinding.TopCoinChange.setText("+" + String.format("%.2f", dataItem.getListQuote().get(0).getPercentChange24h()) + "%");
+            } else {
+                topmarketItemBinding.TopCoinChange.setText(String.format("%.2f", dataItem.getListQuote().get(0).getPercentChange24h()) + "%");
             }
             topmarketItemBinding.executePendingBindings();
         }
@@ -91,23 +89,24 @@ public class TopCoinRvAdapter extends RecyclerView.Adapter<TopCoinRvAdapter.TopC
         }
 
 
-        //set diffrent decimals for diffrent price
+        //set different decimals for different price
+        @SuppressLint("DefaultLocale")
         private void SetDecimalsForPrice(DataItem dataItem) {
-            if (dataItem.getListQuote().get(0).getPrice() < 1){
-                topmarketItemBinding.TopCoinPrice.setText(String.format("%.6f",dataItem.getListQuote().get(0).getPrice()));
-            }else if (dataItem.getListQuote().get(0).getPrice() < 10){
-                topmarketItemBinding.TopCoinPrice.setText(String.format("%.4f",dataItem.getListQuote().get(0).getPrice()));
-            }else {
-                topmarketItemBinding.TopCoinPrice.setText(String.format("%.2f",dataItem.getListQuote().get(0).getPrice()));
+            if (dataItem.getListQuote().get(0).getPrice() < 1) {
+                topmarketItemBinding.TopCoinPrice.setText(String.format("%.6f", dataItem.getListQuote().get(0).getPrice()));
+            } else if (dataItem.getListQuote().get(0).getPrice() < 10) {
+                topmarketItemBinding.TopCoinPrice.setText(String.format("%.4f", dataItem.getListQuote().get(0).getPrice()));
+            } else {
+                topmarketItemBinding.TopCoinPrice.setText(String.format("%.2f", dataItem.getListQuote().get(0).getPrice()));
             }
         }
 
         //set Color Green and Red for price
-        private void SetColorText(DataItem dataItem){
-            if (dataItem.getListQuote().get(0).getPercentChange24h() < 0){
+        private void SetColorText(DataItem dataItem) {
+            if (dataItem.getListQuote().get(0).getPercentChange24h() < 0) {
                 topmarketItemBinding.TopCoinChange.setTextColor(Color.RED);
                 topmarketItemBinding.TopCoinPrice.setTextColor(Color.RED);
-            }else {
+            } else {
                 topmarketItemBinding.TopCoinChange.setTextColor(Color.GREEN);
                 topmarketItemBinding.TopCoinPrice.setTextColor(Color.GREEN);
             }

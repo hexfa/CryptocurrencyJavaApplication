@@ -16,9 +16,9 @@ public class CryptoDataModelConverter {
             return (null);
         }
         Gson gson = new Gson();
-        Type type = new TypeToken<CryptoMarketDataModel>() {}.getType();
-        String json = gson.toJson(cryptoMarketDataModel, type);
-        return json;
+        Type type = new TypeToken<CryptoMarketDataModel>() {
+        }.getType();
+        return gson.toJson(cryptoMarketDataModel, type);
     }
 
     @TypeConverter
@@ -27,8 +27,8 @@ public class CryptoDataModelConverter {
             return (null);
         }
         Gson gson = new Gson();
-        Type type = new TypeToken<CryptoMarketDataModel>() {}.getType();
-        CryptoMarketDataModel cryptoMarketDataModel = gson.fromJson(data, type);
-        return cryptoMarketDataModel;
+        Type type = new TypeToken<CryptoMarketDataModel>() {
+        }.getType();
+        return gson.fromJson(data, type);
     }
 }

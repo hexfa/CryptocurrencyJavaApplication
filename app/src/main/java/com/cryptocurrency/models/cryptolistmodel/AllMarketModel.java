@@ -12,16 +12,13 @@ public class AllMarketModel {
     @SerializedName("status")
     private ListStatus listStatus;
 
-    public RootData getRootData(){
+    public RootData getRootData() {
         return data;
     }
 
-    public ListStatus getStatus(){
+    public ListStatus getStatus() {
         return listStatus;
     }
-
-
-
 
 
     public static class ListStatus {
@@ -47,37 +44,37 @@ public class AllMarketModel {
         @SerializedName("notice")
         private Object notice;
 
-        public String getErrorMessage(){
+        public String getErrorMessage() {
             return errorMessage;
         }
 
-        public int getElapsed(){
+        public int getElapsed() {
             return elapsed;
         }
 
-        public int getTotalCount(){
+        public int getTotalCount() {
             return totalCount;
         }
 
-        public int getCreditCount(){
+        public int getCreditCount() {
             return creditCount;
         }
 
-        public int getErrorCode(){
+        public int getErrorCode() {
             return errorCode;
         }
 
-        public String getTimestamp(){
+        public String getTimestamp() {
             return timestamp;
         }
 
-        public Object getNotice(){
+        public Object getNotice() {
             return notice;
         }
     }
 
 
-    public static class RootData{
+    public static class RootData {
 
         @SerializedName("cryptoCurrencyList")
         private List<DataItem> cryptoCurrencyList;

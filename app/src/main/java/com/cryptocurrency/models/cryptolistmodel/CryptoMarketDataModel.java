@@ -2,15 +2,15 @@ package com.cryptocurrency.models.cryptolistmodel;
 
 public class CryptoMarketDataModel {
 
-    private String cryptos;
-    private String exchanges;
-    private String marketCap;
-    private String vol_24h;
-    private String btc_dominance;
-    private String eth_dominance;
-    private String marketCap_change;
-    private String vol_change;
-    private String btcd_change;
+    private final String cryptos;
+    private final String exchanges;
+    private final String marketCap;
+    private final String vol_24h;
+    private final String btc_dominance;
+    private final String eth_dominance;
+    private final String marketCap_change;
+    private final String vol_change;
+    private final String btcd_change;
 
     public CryptoMarketDataModel(String cryptos, String exchanges, String marketCap, String vol_24h, String btc_dominance, String eth_dominance, String marketCap_change, String vol_change, String btcd_change) {
         this.cryptos = cryptos;

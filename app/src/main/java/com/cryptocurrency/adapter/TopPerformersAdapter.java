@@ -6,11 +6,11 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.cryptocurrency.fragment.TopGainLoseFragment;
+import com.cryptocurrency.fragment.TopPerformersFragment;
 
 
-public class TopGainLoserAdapter extends FragmentStateAdapter {
-    public TopGainLoserAdapter(@NonNull Fragment fragment) {
+public class TopPerformersAdapter extends FragmentStateAdapter {
+    public TopPerformersAdapter(@NonNull Fragment fragment) {
         super(fragment);
     }
 
@@ -18,10 +18,10 @@ public class TopGainLoserAdapter extends FragmentStateAdapter {
     @Override
     public Fragment createFragment(int position) {
 
-        Fragment fragment = new TopGainLoseFragment();
+        Fragment fragment = new TopPerformersFragment();
 
         Bundle args = new Bundle();
-        args.putInt("pos",position);
+        args.putInt("pos", position);
 
         fragment.setArguments(args);
         return fragment;

@@ -2,7 +2,6 @@ package com.cryptocurrency.repository;
 
 import android.util.Log;
 
-
 import com.cryptocurrency.models.cryptolistmodel.AllMarketModel;
 import com.cryptocurrency.models.cryptolistmodel.CryptoMarketDataModel;
 import com.cryptocurrency.retrofit.RequestApi;
@@ -40,13 +39,8 @@ public class AppRepository {
 
         final ExecutorService executor = Executors.newSingleThreadExecutor();
 
-        final Callable<Observable<AllMarketModel>> myNetworkCallable = new Callable<Observable<AllMarketModel>>() {
-            @Override
-            public Observable<AllMarketModel> call() throws Exception {
-                return requestApi.makeMarketLastListCall();
-            }
-        };
-        final Future<Observable<AllMarketModel>> futureObservable = new Future<Observable<AllMarketModel>>() {
+        final Callable<Observable<AllMarketModel>> myNetworkCallable = () -> requestApi.makeMarketLastListCall();
+        return new Future<Observable<AllMarketModel>>() {
             @Override
             public boolean cancel(boolean b) {
                 if (b) {
@@ -75,7 +69,6 @@ public class AppRepository {
                 return executor.submit(myNetworkCallable).get(timeOut, timeUnit);
             }
         };
-        return futureObservable;
     }
 
 
@@ -103,33 +96,33 @@ public class AppRepository {
                 });
     }
 
-    public void insertAllMarket(AllMarketModel allMarketModel){
+    public void insertAllMarket(AllMarketModel allMarketModel) {
         Completable.fromAction(() -> roomDao.insert(new MarketListEntity(allMarketModel)))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new CompletableObserver() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
-                        Log.e("TAG", "onSubscribe: " );
+                        Log.e("TAG", "onSubscribe: ");
                     }
 
                     @Override
                     public void onComplete() {
-                        Log.e("TAG", "onComplete: " );
+                        Log.e("TAG", "onComplete: ");
                     }
 
                     @Override
                     public void onError(@NonNull Throwable e) {
-                        Log.e("TAG", "onError: " + e.getMessage() );
+                        Log.e("TAG", "onError: " + e.getMessage());
                     }
                 });
     }
 
-    public Flowable<MarketListEntity> getAllMarketData(){
+    public Flowable<MarketListEntity> getAllMarketData() {
         return roomDao.getAllMarketData();
     }
 
-    public Flowable<MarketDataEntity> getCryptoMarketData(){
+    public Flowable<MarketDataEntity> getCryptoMarketData() {
         return roomDao.getCryptoMarketData();
     }
 
