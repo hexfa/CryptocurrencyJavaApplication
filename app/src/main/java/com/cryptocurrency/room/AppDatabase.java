@@ -7,10 +7,10 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 
-import com.example.cryptocurrencyjavaapplication.room.converters.AllMarketModelConverter;
-import com.example.cryptocurrencyjavaapplication.room.converters.CryptoDataModelConverter;
-import com.example.cryptocurrencyjavaapplication.room.entity.MarketDataEntity;
-import com.example.cryptocurrencyjavaapplication.room.entity.MarketListEntity;
+import com.cryptocurrency.room.converters.AllMarketModelConverter;
+import com.cryptocurrency.room.converters.CryptoDataModelConverter;
+import com.cryptocurrency.room.entity.MarketDataEntity;
+import com.cryptocurrency.room.entity.MarketListEntity;
 
 
 @TypeConverters({AllMarketModelConverter.class, CryptoDataModelConverter.class})

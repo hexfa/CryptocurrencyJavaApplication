@@ -3,8 +3,9 @@ package com.cryptocurrency.hilt.modules;
 
 import android.content.Context;
 
-import com.example.cryptocurrencyjavaapplication.room.AppDatabase;
-import com.example.cryptocurrencyjavaapplication.room.RoomDao;
+
+import com.cryptocurrency.room.AppDatabase;
+import com.cryptocurrency.room.RoomDao;
 
 import javax.inject.Singleton;
 

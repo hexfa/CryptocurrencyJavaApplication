@@ -1,9 +1,9 @@
 package com.cryptocurrency.hilt.modules;
 
 
-import com.example.cryptocurrencyjavaapplication.repository.AppRepository;
-import com.example.cryptocurrencyjavaapplication.retrofit.RequestApi;
-import com.example.cryptocurrencyjavaapplication.room.RoomDao;
+import com.cryptocurrency.repository.AppRepository;
+import com.cryptocurrency.retrofit.RequestApi;
+import com.cryptocurrency.room.RoomDao;
 
 import java.io.IOException;
 
@@ -60,7 +60,8 @@ public class HiltNetworkModule {
 
     @Provides
     @Singleton
-    AppRepository ProvideAppRepository(RequestApi requestApi, RoomDao roomDao){
+    AppRepository ProvideAppRepository(RequestApi requestApi,
+                                       RoomDao roomDao){
         return new AppRepository(requestApi,roomDao);
     }
 }
