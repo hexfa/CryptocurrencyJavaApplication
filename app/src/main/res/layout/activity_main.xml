@@ -43,7 +43,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
                 app:iconSize="24dp"
-                app:backgroundColor="#673AB7"
+                app:backgroundColor="#E8C740"
                 app:menu="@menu/menu"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
 

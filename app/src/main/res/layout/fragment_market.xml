@@ -74,7 +74,7 @@
                             android:layout_marginStart="20dp"
                             android:layout_marginTop="25dp"
                             android:text="Market Cap"
-                            android:textColor="#BCBCBC"
+                            android:textColor="#949494"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
@@ -127,7 +127,7 @@
                             android:layout_marginStart="20dp"
                             android:layout_marginTop="25dp"
                             android:text="24h Volume"
-                            android:textColor="#BCBCBC"
+                            android:textColor="#949494"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
@@ -177,7 +177,7 @@
                             android:layout_marginStart="20dp"
                             android:layout_marginTop="25dp"
                             android:text="BTC Dominance"
-                            android:textColor="#BCBCBC"
+                            android:textColor="#949494"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
