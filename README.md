@@ -65,14 +65,22 @@ To generate the documentation for this project, you can use Dokka.
 
 ### Screenshots 🖼️
 
- <img src="https://github.com/hexfa/Files/blob/main/CoinMarketCap/Screenshot%202023-06-27%20161357.png" height="649" width="300" alt="Rick and morty App hexfa"> 
-<img src="https://github.com/hexfa/Files/blob/main/CoinMarketCap/Screenshot%202023-06-27%20161413.png" height="649" width="300" alt="Rick and morty App hexfa"> 
-<img src="https://github.com/hexfa/Files/blob/main/CoinMarketCap/Screenshot%202023-06-27%20161436.png" height="649" width="300" alt="Rick and morty App hexfa">
-<img src="https://github.com/hexfa/Files/blob/main/CoinMarketCap/Screenshot%202023-06-27%20161451.png" height="649" width="300" alt="Rick and morty App hexfa"> 
-<img src="https://github.com/hexfa/Files/blob/main/CoinMarketCap/Screenshot%202023-06-27%20161526.png" height="649" width="300" alt="Rick and morty App hexfa">
 <div style="display: flex; justify-content: center;">
   <img src="https://github.com/hexfa/Files/blob/main/CoinMarketCap/Screenshot%202023-06-27%20161357.png" alt="Rick and Morty App hexfa" style="max-width: 100%; height: auto;">
 </div>
+<div style="display: flex; justify-content: center;">
+  <img src="https://github.com/hexfa/Files/blob/main/CoinMarketCap/Screenshot%202023-06-27%20161413.png" alt="Rick and Morty App hexfa" style="max-width: 100%; height: auto;">
+</div>
+<div style="display: flex; justify-content: center;">
+  <img src="https://github.com/hexfa/Files/blob/main/CoinMarketCap/Screenshot%202023-06-27%20161436.png" alt="Rick and Morty App hexfa" style="max-width: 100%; height: auto;">
+</div>
+<div style="display: flex; justify-content: center;">
+  <img src="https://github.com/hexfa/Files/blob/main/CoinMarketCap/Screenshot%202023-06-27%20161451.png" alt="Rick and Morty App hexfa" style="max-width: 100%; height: auto;">
+</div>
+<div style="display: flex; justify-content: center;">
+  <img src="https://github.com/hexfa/Files/blob/main/CoinMarketCap/Screenshot%202023-06-27%20161526.png" alt="Rick and Morty App hexfa" style="max-width: 100%; height: auto;">
+</div>
+
 
 ## Built With 🛠️
 
